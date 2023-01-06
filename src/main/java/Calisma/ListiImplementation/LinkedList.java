@@ -91,8 +91,12 @@ public class LinkedList implements List {
         if (head == null){
             return false;
         }
-        if (head.data.equals(o)){
+        if (head.data.equals(o) && head.next==null){
             head = null;
+            return true;
+        }
+        else if(head.data.equals(o) && head.next!=null){
+            head = head.next;
             return true;
         }
         Node last2 = last.next;
