@@ -33,13 +33,13 @@ public class Tests {
     void removeTest() {
         List list = new LinkedList();
 
-        list.add(3);
-        list.add(5);
-        list.add(7);
+        list.add("emre");
+        list.add("gonca");
+        list.add("tonguc");
 
-        list.remove(5);
-        Assertions.assertEquals(3,list.get(0));
-        Assertions.assertEquals(7,list.get(1));
+        list.remove("gonca");
+        Assertions.assertEquals("emre",list.get(0));
+        Assertions.assertEquals("tonguc",list.get(1));
     }
 
     @Test
