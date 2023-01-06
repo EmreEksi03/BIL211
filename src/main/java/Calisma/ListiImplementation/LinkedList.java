@@ -33,6 +33,12 @@ public class LinkedList implements List {
 
     @Override
     public boolean contains(Object o) {
+        if (head == null) {
+            return false;
+        }
+        if (head.equals(o)) {
+            return true;
+        }
         Node last = head;
         while (last.next != null) {
             if (last.data.equals(o)){
@@ -65,29 +71,29 @@ public class LinkedList implements List {
     public boolean add(Object o) {
         Node node = new Node(o);
 
-        Node last = head;
+
         if (isEmpty()){
             head = node;
-            return false;
+            return true;
         }
-
+        Node last = head;
         while (last.next != null) {
             last = last.next;
         }
         last.next = node;
 
-        return false;
+        return true;
     }
 
     @Override
     public boolean remove(Object o) {
         Node last = head;
-        if (last.data.equals(o)){
+        if (head == null){
+            return false;
+        }
+        if (head.data.equals(o)){
             head = null;
             return true;
-        }
-        if (last.next==null){
-            return false;
         }
         Node last2 = last.next;
         while (last2 != null) {
