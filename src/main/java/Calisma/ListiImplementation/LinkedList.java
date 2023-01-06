@@ -215,7 +215,7 @@ public class LinkedList implements List {
         }
         else {
             Node last = head;
-            for (int i=0;i<index;i++) {
+            for (int i=0;i<index-1;i++) {
                 last = last.next;
             }
             Node temp = last.next;
