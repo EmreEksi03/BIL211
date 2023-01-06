@@ -122,18 +122,20 @@ public class LinkedList implements List {
             return false;
         }
         if (isEmpty()){
-            Node node = new Node(c.iterator().next());
+            Iterator it = c.iterator();
+            Node node = new Node(it.next());
             head = node;
             Node last = head;
-            while (c.iterator().hasNext()){
-                last.next = new Node(c.iterator().next());
+            while (it.hasNext()){
+                last.next = new Node(it.next());
                 last = last.next;
             }
         }
         else {
+            Iterator it = c.iterator();
             Node last = head;
-            while (c.iterator().hasNext()) {
-                last.next = new Node(c.iterator().next());
+            while (it.hasNext()) {
+                last.next = new Node(it.next());
                 last = last.next;
             }
         }
@@ -146,23 +148,24 @@ public class LinkedList implements List {
             return false;
         }
         if (head == null && index == 0){
-            Node node = new Node(c.iterator().next());
+            Iterator it = c.iterator();
+            Node node = new Node(it.next());
             head = node;
             Node last = head;
-            while (c.iterator().hasNext()){
-                last.next = new Node(c.iterator().next());
+            while (it.hasNext()){
+                last.next = new Node(it.next());
                 last = last.next;
             }
         }
         else {
             Node last = head;
-            for (int i=0;i<index;i++)
-            {
+            for (int i=0;i<index;i++) {
                 last = last.next;
             }
             Node temp = last.next;
-            while (c.iterator().hasNext()){
-                last.next = new Node(c.iterator().next());
+            Iterator it = c.iterator();
+            while (it.hasNext()){
+                last.next = new Node(it.next());
                 last = last.next;
             }
             last.next = temp;
@@ -198,16 +201,6 @@ public class LinkedList implements List {
 
     @Override
     public void add(int index, Object element) {
-        /*
-        if (size()<=index){
-            System.out.println("Index too large!!");
-            return;
-        }
-        if (index<=0){
-            System.out.println("Index too small!!");
-            return;
-        }*/
-
         Node node = new Node(element);
 
         if (head == null && index == 0){

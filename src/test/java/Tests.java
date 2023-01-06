@@ -137,7 +137,6 @@ public class Tests {
         Assertions.assertTrue(list.remove(tonguc));
         Assertions.assertTrue(list.remove(gonca));
         Assertions.assertEquals(0,list.size());
-
         //
 
     }
