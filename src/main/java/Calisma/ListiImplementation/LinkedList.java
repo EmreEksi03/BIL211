@@ -47,7 +47,7 @@ public class LinkedList implements List {
 
     @Override
     public Object[] toArray() {
-        Object[] arr = new Object[this.size()];
+        Object[] arr = new Object[size()];
 
         Node last = head;
         int x=0;
@@ -56,8 +56,9 @@ public class LinkedList implements List {
             last = last.next;
             x++;
         }
+        arr[x] = last.data;
 
-        return new Object[0];
+        return arr;
     }
 
     @Override
@@ -119,18 +120,44 @@ public class LinkedList implements List {
                 last = last.next;
             }
         }
-        Node last = head;
-        while (c.iterator().hasNext()){
-            last.next = new Node(c.iterator().next());
-            last = last.next;
+        else {
+            Node last = head;
+            while (c.iterator().hasNext()) {
+                last.next = new Node(c.iterator().next());
+                last = last.next;
+            }
         }
         return true;
     }
 
     @Override
     public boolean addAll(int index, Collection c) {
-
-        return false;
+        if (c.isEmpty()){
+            return false;
+        }
+        if (head == null && index == 0){
+            Node node = new Node(c.iterator().next());
+            head = node;
+            Node last = head;
+            while (c.iterator().hasNext()){
+                last.next = new Node(c.iterator().next());
+                last = last.next;
+            }
+        }
+        else {
+            Node last = head;
+            for (int i=0;i<index;i++)
+            {
+                last = last.next;
+            }
+            Node temp = last.next;
+            while (c.iterator().hasNext()){
+                last.next = new Node(c.iterator().next());
+                last = last.next;
+            }
+            last.next = temp;
+        }
+        return true;
     }
 
     @Override
@@ -141,12 +168,22 @@ public class LinkedList implements List {
 
     @Override
     public Object get(int index) {
-        return null;
+        Node last = head;
+        for (int i=0;i<index;i++) {
+            last = last.next;
+        }
+        return last.data;
     }
 
     @Override
     public Object set(int index, Object element) {
-        return null;
+        Node last = head;
+        for (int i=0;i<index;i++) {
+            last = last.next;
+        }
+        Object temp = last.data;
+        last.data = element;
+        return temp;
     }
 
     @Override
@@ -168,8 +205,7 @@ public class LinkedList implements List {
         }
         else {
             Node last = head;
-            for (int i=0;i<index;i++)
-            {
+            for (int i=0;i<index;i++) {
                 last = last.next;
             }
             Node temp = last.next;
@@ -180,7 +216,14 @@ public class LinkedList implements List {
 
     @Override
     public Object remove(int index) {
-        return null;
+        Node last = head;
+        Node last2 = last.next;
+        for (int i=0;i<index-1;i++) {
+            last = last.next;
+            last2 = last2.next;
+        }
+        last.next = last2.next;
+        return last2.data;
     }
 
     @Override
@@ -208,10 +251,7 @@ public class LinkedList implements List {
         return false;
     }
 
-    @Override
-    public Object[] toArray(Object[] a) {
-        return new Object[0];
-    }
+
 
 
 
@@ -238,5 +278,9 @@ public class LinkedList implements List {
     @Override
     public boolean retainAll(Collection c) {
         return false;
+    }
+    @Override
+    public Object[] toArray(Object[] a) {
+        return new Object[0];
     }
 }
