@@ -95,4 +95,53 @@ public class Tests {
         Assertions.assertEquals(5,list.get(1));
         Assertions.assertEquals(7,list.get(2));
     }
+
+
+
+
+
+
+    @Test
+    void tonguc() {
+
+        //contains,size,add,remove
+        List list = new LinkedList();
+        String tonguc = new String("Tonguc");
+        Assertions.assertFalse(list.contains(tonguc));
+        Assertions.assertTrue(list.add(tonguc));
+        Assertions.assertTrue(list.contains(tonguc));
+        Assertions.assertEquals(1,list.size());
+        list.remove(tonguc);
+        Assertions.assertFalse(list.contains(tonguc));
+        Assertions.assertEquals(0,list.size());
+
+        //toArray
+        list = new LinkedList();
+        String emre = new String("Emre");
+        String gonca = new String("Gonca");
+        list.add(tonguc);
+        list.add(emre);
+        list.add(gonca);
+        Assertions.assertEquals(3,list.size());
+        Object[] objects = list.toArray();
+        Assertions.assertEquals("Tonguc",objects[0]);
+        Assertions.assertEquals("Emre",objects[1]);
+        Assertions.assertEquals("Gonca",objects[2]);
+
+
+        //remove
+        list = new LinkedList();
+        Assertions.assertFalse(list.remove(gonca));
+        list.add(tonguc);
+        list.add(gonca);
+        Assertions.assertEquals(2,list.size());
+        Assertions.assertEquals(2,list.size());
+        Assertions.assertFalse(list.remove(emre));
+        Assertions.assertTrue(list.remove(tonguc));
+        Assertions.assertTrue(list.remove(gonca));
+        Assertions.assertEquals(0,list.size());
+
+        //
+
+    }
 }
