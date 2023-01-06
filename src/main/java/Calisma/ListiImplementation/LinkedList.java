@@ -36,7 +36,7 @@ public class LinkedList implements List {
         if (head == null) {
             return false;
         }
-        if (head.equals(o)) {
+        if (head.data.equals(o)) {
             return true;
         }
         Node last = head;

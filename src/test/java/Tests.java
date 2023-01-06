@@ -109,7 +109,7 @@ public class Tests {
         String tonguc = new String("Tonguc");
         Assertions.assertFalse(list.contains(tonguc));
         Assertions.assertTrue(list.add(tonguc));
-        //Assertions.assertTrue(list.contains(tonguc));
+        Assertions.assertTrue(list.contains(tonguc));
         Assertions.assertEquals(1,list.size());
         list.remove(tonguc);
         Assertions.assertFalse(list.contains(tonguc));
