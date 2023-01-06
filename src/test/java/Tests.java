@@ -89,17 +89,13 @@ public class Tests {
 
         List list = new LinkedList();
 
-        list.addAll(List.of(arr));
-
+        List<Object> arr1 = List.of(arr);
+        list.addAll(arr1);
+//
         Assertions.assertEquals(3,list.get(0));
         Assertions.assertEquals(5,list.get(1));
         Assertions.assertEquals(7,list.get(2));
     }
-
-
-
-
-
 
     @Test
     void tonguc() {
@@ -143,6 +139,48 @@ public class Tests {
         Assertions.assertEquals(0,list.size());
 
         //
+
+    }
+
+    @Test
+    void tonguc2() {
+
+        //get set
+        List list = new LinkedList();
+        String tonguc = new String("Tonguc");
+        String emre = new String("Emre");
+        String gonca = new String("Gonca");
+        list.add(tonguc);
+        list.add(emre);
+        list.add(gonca);
+        Assertions.assertEquals(3,list.size());
+        Assertions.assertEquals("Tonguc",list.get(0));
+        Assertions.assertEquals("Emre",list.get(1));
+        String yunus = new String("Yunus");
+        list.set(2, yunus);
+        Assertions.assertNotEquals("Gonca",list.get(2));
+        Assertions.assertEquals("Yunus",list.get(2));
+
+
+        //add,remove
+        list = new LinkedList();
+        list.add(0,tonguc);
+        list.add(1,gonca);
+        list.add(1,emre);
+        list.add(1,yunus);
+
+        Assertions.assertEquals(4,list.size());
+        Assertions.assertFalse(list.remove(emre));
+        Assertions.assertTrue(list.remove(tonguc));
+        Assertions.assertEquals(2,list.size());
+        Assertions.assertEquals(gonca,list.get(1));
+        Assertions.assertEquals(yunus,list.get(0));
+
+        list.remove(0);
+        list.remove(0);
+        Assertions.assertEquals(0,list.size());
+
+
 
     }
 }
