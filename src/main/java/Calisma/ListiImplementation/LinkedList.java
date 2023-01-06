@@ -220,6 +220,11 @@ public class LinkedList implements List {
     @Override
     public Object remove(int index) {
         Node last = head;
+        if (head.next==null && index==0){
+            Object temp = head.data;
+            head = null;
+            return temp;
+        }
         Node last2 = last.next;
         for (int i=0;i<index-1;i++) {
             last = last.next;
