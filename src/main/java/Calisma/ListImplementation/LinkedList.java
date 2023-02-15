@@ -1,15 +1,14 @@
-package Calisma.ListiImplementation;
+package Calisma.ListImplementation;
+
+import Calisma.AnimalInterface.Animal;
 
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
-public class LinkedList implements List {
-    public Node head;
-    public static void main(String[] args) {
-
-    }
+public class LinkedList implements List<Animal> {
+    private Node<Animal> head;
     @Override
     public int size() {
         if (isEmpty()){
@@ -68,7 +67,7 @@ public class LinkedList implements List {
     }
 
     @Override
-    public boolean add(Object o) {
+    public boolean add(Animal o) {
         Node node = new Node(o);
 
 
@@ -180,8 +179,8 @@ public class LinkedList implements List {
     }
 
     @Override
-    public Object get(int index) {
-        Node last = head;
+    public Animal get(int index) {
+        Node<Animal> last = head;
         for (int i=0;i<index;i++) {
             last = last.next;
         }
@@ -189,18 +188,18 @@ public class LinkedList implements List {
     }
 
     @Override
-    public Object set(int index, Object element) {
-        Node last = head;
+    public Animal set(int index, Animal element) {
+        Node<Animal> last = head;
         for (int i=0;i<index;i++) {
             last = last.next;
         }
-        Object temp = last.data;
+        Animal temp = last.data;
         last.data = element;
         return temp;
     }
 
     @Override
-    public void add(int index, Object element) {
+    public void add(int index, Animal element) {
         Node node = new Node(element);
 
         if (head == null && index == 0){
@@ -218,14 +217,14 @@ public class LinkedList implements List {
     }
 
     @Override
-    public Object remove(int index) {
-        Node last = head;
+    public Animal remove(int index) {
+        Node<Animal> last = head;
         if (head.next==null && index==0){
-            Object temp = head.data;
+            Animal temp = head.data;
             head = null;
             return temp;
         }
-        Node last2 = last.next;
+        Node<Animal> last2 = last.next;
         for (int i=0;i<index-1;i++) {
             last = last.next;
             last2 = last2.next;
@@ -234,29 +233,85 @@ public class LinkedList implements List {
         return last2.data;
     }
 
+
+
+
+
+
+
     @Override
     public int indexOf(Object o) {
-        return 0;
+        int x=0;
+        Node last = head;
+        while (last.next!=null&&last.data!=o){
+            last=last.next;
+            x++;
+        }
+        return x;
     }
 
     @Override
     public int lastIndexOf(Object o) {
-        return 0;
+        int x = -1;
+        int index = 0;
+        Node node = head;
+        while (node.next!=null){
+            if (node.data.equals(o)){
+                x = index;
+            }
+            index++;
+            node = node.next;
+        }
+        return x;
     }
 
     @Override
     public List subList(int fromIndex, int toIndex) {
-        return null;
+        LinkedList list = this;
+        Node last2 = list.head;
+        for (int i=0;i<fromIndex;i++){
+            last2 = last2.next;
+        }
+        Node last = list.head;
+        for (int i=0;i<toIndex;i++){
+            last = last.next;
+        }
+        list.head = last2;
+        last.next = null;
+        return list;
     }
 
     @Override
     public boolean removeAll(Collection c) {
-        return false;
+        boolean change = false;
+        Iterator it = c.iterator();
+        while (it.hasNext()){
+            Object k = it.next();
+            if (contains(k)){
+                int index = 0;
+                Node last = head;
+                while (last.next!=null){
+                    if (last.data.equals(k)){
+                        remove(index);
+                        change = true;
+                    }
+                    last = last.next;
+                    index++;
+                }
+            }
+        }
+        return change;
     }
 
     @Override
     public boolean containsAll(Collection c) {
-        return false;
+        Iterator it = c.iterator();
+        while (it.hasNext()) {
+            if (!contains(it.next())) {
+                return false;
+            }
+        }
+        return true;
     }
 
 

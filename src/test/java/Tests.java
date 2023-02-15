@@ -1,5 +1,7 @@
-import Calisma.ListiImplementation.LinkedList;
-import Calisma.ListiImplementation.Node;
+import Calisma.AnimalInterface.Animal;
+import Calisma.AnimalInterface.Cat;
+import Calisma.AnimalInterface.Dog;
+import Calisma.ListImplementation.LinkedList;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -9,23 +11,23 @@ public class Tests {
     @Test
     void addTest() {
         List list = new LinkedList();
-        int[] arr = new int[]{3, 5, 7};
+        Animal[] arr = new Animal[]{new Cat("kedi1"), new Cat("kedi2"), new Dog("kopek")};
 
-        list.add(3);
-        list.add(5);
-        list.add(7);
+        list.add(new Cat("kedi1"));
+        list.add(new Cat("kedi2"));
+        list.add(new Dog("kopek"));
         for (int i=0;i<3;i++){
-            Assertions.assertEquals(arr[i],list.get(i));
+            Assertions.assertEquals(true,list.get(i).equals(arr[i]));
         }
     }
 
     @Test
     void sizeTest() {
-        List list = new LinkedList();
+        List<Animal> list = new LinkedList();
 
-        list.add(3);
-        list.add(5);
-        list.add(7);
+        list.add(new Cat("kedi2"));
+        list.add(new Cat("kedi2"));
+        list.add(new Dog("kopek"));
         Assertions.assertEquals(3,list.size());
     }
 
@@ -33,40 +35,40 @@ public class Tests {
     void removeTest() {
         List list = new LinkedList();
 
-        list.add("emre");
-        list.add("gonca");
-        list.add("tonguc");
+        list.add(new Cat("kedi1"));
+        list.add(new Cat("kedi2"));
+        list.add(new Cat("kedi3"));
 
-        list.remove("gonca");
-        Assertions.assertEquals("emre",list.get(0));
-        Assertions.assertEquals("tonguc",list.get(1));
+        list.remove(new Cat("kedi2"));
+        Assertions.assertEquals(new Cat("kedi1"),list.get(0));
+        Assertions.assertEquals(new Cat("kedi3"),list.get(1));
     }
 
     @Test
     void containsTest() {
         List list = new LinkedList();
 
-        list.add(3);
-        list.add(5);
-        list.add(7);
+        list.add(new Cat("kedi1"));
+        list.add(new Cat("kedi2"));
+        list.add(new Cat("kedi3"));
 
-        Assertions.assertEquals(true,list.contains(3));
-        Assertions.assertEquals(false,list.contains(10));
+        Assertions.assertEquals(true,list.contains(new Cat("kedi1")));
+        Assertions.assertEquals(false,list.contains(new Cat("kedi4")));
     }
 
     @Test
     void addToIndexTest() {
         List list = new LinkedList();
 
-        list.add(3);
-        list.add(5);
-        list.add(7);
+        list.add(new Cat("kedi1"));
+        list.add(new Cat("kedi2"));
+        list.add(new Cat("kedi3"));
 
-        list.add(2,11);
+        list.add(2,(new Cat("kedi4")));
 
-        Assertions.assertEquals(5,list.get(1));
-        Assertions.assertEquals(11,list.get(2));
-        Assertions.assertEquals(7,list.get(3));
+        Assertions.assertEquals((new Cat("kedi2")),list.get(1));
+        Assertions.assertEquals((new Cat("kedi4")),list.get(2));
+        Assertions.assertEquals((new Cat("kedi3")),list.get(3));
     }
 
     @Test
