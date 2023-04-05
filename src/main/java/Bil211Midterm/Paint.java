@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class Paint implements MouseMotionListener, ActionListener, MouseListener {
+public class Paint extends JFrame implements MouseMotionListener, ActionListener, MouseListener {
     public static void main(String[] args) {
         Paint paint = new Paint();
     }
@@ -16,6 +16,7 @@ public class Paint implements MouseMotionListener, ActionListener, MouseListener
     public Paint() {
         myFrame.setSize(700,500);
         myFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        myFrame.addMouseListener(this);
         myFrame.addMouseMotionListener(this);
         myFrame.setLayout(new BorderLayout());
 
@@ -23,20 +24,16 @@ public class Paint implements MouseMotionListener, ActionListener, MouseListener
     }
     public void paintRectangle(Graphics g){
         int x = Math.min(prevX, endX);
-        int y = Math.min(prevX, endY);
+        int y = Math.min(prevY, endY);
         int width = Math.abs(prevX - endX);
-        int height = Math.abs(prevX - endY);
+        int height = Math.abs(prevY - endY);
         g.fillRect(x, y, width, height);
     }
     @Override
     public void mouseDragged(MouseEvent e) {
-        Graphics graphics = myFrame.getGraphics();
-        graphics.setColor(color);
-        if (drawingRectangle){
-            endX = e.getX();
-            endY = e.getY();
-        }
-        else {
+        if (!drawingRectangle) {
+            Graphics graphics = myFrame.getGraphics();
+            graphics.setColor(color);
             prevX = e.getX();
             prevY = e.getY();
             graphics.drawLine(prevX, prevY, e.getX(), e.getY());
@@ -57,6 +54,8 @@ public class Paint implements MouseMotionListener, ActionListener, MouseListener
 
     @Override
     public void mouseReleased(MouseEvent e) {
+        endX = e.getX();
+        endY = e.getY();
         Graphics graphics = myFrame.getGraphics();
         graphics.setColor(color);
         paintRectangle(graphics);
