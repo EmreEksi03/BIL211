@@ -1,5 +1,4 @@
-import Calisma.ListiImplementation.LinkedList;
-import Calisma.ListiImplementation.Node;
+import ListImlpementation.LinkedList;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

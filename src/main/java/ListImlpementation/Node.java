@@ -1,4 +1,4 @@
-package Calisma.ListiImplementation;
+package ListImlpementation;
 
 public class Node {
     public Object data;
