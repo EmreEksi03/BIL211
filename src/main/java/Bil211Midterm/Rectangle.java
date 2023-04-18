@@ -3,7 +3,7 @@ package Bil211Midterm;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 
-public class Rectangle implements Shape {
+public class Rectangle implements MyShape {
     public int x;
     public int y;
     public int width;
@@ -66,7 +66,7 @@ public class Rectangle implements Shape {
     }
 
     boolean isInsideOf(int mouseX, int mouseY) {
-        return (mouseX >= x && mouseX <= (x + width)) && (mouseY >= y && mouseY <= y+height);
+        return (mouseX >= Math.min(x,(x + width)) && mouseX <= Math.max(x,(x + width))) && (mouseY >= Math.min(y,(y + height)) && mouseY <= Math.max(y,(y + height)));
     }
 
     @Override

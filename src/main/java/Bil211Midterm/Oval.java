@@ -3,7 +3,7 @@ package Bil211Midterm;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 
-public class Oval implements Shape{
+public class Oval implements MyShape {
     int x;
     int y;
     int width;
@@ -54,14 +54,22 @@ public class Oval implements Shape{
         int mouseX = e.getX();
         int mouseY = e.getY();
 
-        return ((mouseX>=x && mouseX<=(x+width)) && (mouseY>=y && mouseY<=y+height));
+        return isInsideOf(mouseX, mouseY);
+    }
+
+    boolean isInsideOf(int mouseX, int mouseY) {
+        return (mouseX >= Math.min(x,(x + width)) && mouseX <= Math.max(x,(x + width))) && (mouseY >= Math.min(y,(y + height)) && mouseY <= Math.max(y,(y + height)));
     }
 
     @Override
     public void draw(Graphics g) {
         Color current = g.getColor();
         g.setColor(currentColor);
-        g.fillOval(x,y,width,height);
+        int ovalX = (width > 0) ? x : x + width;
+        int ovalY = (height > 0) ? y : y + height;
+        int absWidth = Math.abs(width);
+        int absHeight = Math.abs(height);
+        g.fillOval(ovalX, ovalY, absWidth, absHeight);
         g.setColor(current);
     }
 
@@ -75,6 +83,5 @@ public class Oval implements Shape{
     public void updateSize(int width, int height) {
         setWidth(width);
         setHeight(height);
-
     }
 }

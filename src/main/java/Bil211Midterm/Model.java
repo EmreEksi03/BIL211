@@ -6,27 +6,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Model {
-    List<Shape> shapes = new ArrayList<>();
+    List<MyShape> myShapes = new ArrayList<>();
     private Color currentColor;
 
     public void addRectangle(Rectangle rectangle) {
-        shapes.add(rectangle);
+        myShapes.add(rectangle);
     }
     public void addOval(Oval oval) {
-        shapes.add(oval);
+        myShapes.add(oval);
     }
     public void addLine(Line line) {
-        shapes.add(line);
+        myShapes.add(line);
     }
 
-    public void draw(Graphics g){
-        for (int i = 0; i < shapes.size(); i++) {
-            shapes.get(i).draw(g);
+    public void draw(Graphics g,int length){
+        g.drawLine(0,140,length,140);
+        for (int i = 0; i < myShapes.size(); i++) {
+            myShapes.get(i).draw(g);
         }
     }
     public int insideOfModel(MouseEvent e){
-        for (int i = 0; i < shapes.size(); i++) {
-             if (shapes.get(i).insideOf(e)){
+        for (int i = 0; i < myShapes.size(); i++) {
+             if (myShapes.get(i).insideOf(e)){
                  return i;
              }
         }
@@ -34,13 +35,13 @@ public class Model {
     }
 
     public void updateLast(int width, int height) {
-        Shape shape = shapes.get(shapes.size() - 1);
-        shape.updateSize(width,height);
+        MyShape myShape = myShapes.get(myShapes.size() - 1);
+        myShape.updateSize(width,height);
     }
 
     public void update(int index, int x, int y) {
-        Shape shape = shapes.get(index);
-        shape.updateCoordinate(x,y);
+        MyShape myShape = myShapes.get(index);
+        myShape.updateCoordinate(x,y);
     }
 
     public void setCurrentColour(Color currentColor) {

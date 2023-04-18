@@ -3,7 +3,7 @@ package Bil211Midterm;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 
-public class Line implements Shape {
+public class Line implements MyShape {
 
     private int x;
     private int y;

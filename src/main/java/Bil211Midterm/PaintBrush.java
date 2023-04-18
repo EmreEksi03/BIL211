@@ -4,15 +4,18 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class Paint extends JFrame implements MouseMotionListener, ActionListener, MouseListener {
+public class PaintBrush extends JPanel implements MouseMotionListener, ActionListener, MouseListener {
     public static void main(String[] args) {
-        Paint paint = new Paint();
+        JFrame f = new JFrame("PaintBrush");
+        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        f.setContentPane(new PaintBrush());
+        f.setSize(700, 500);
+        f.setVisible(true);
     }
 
 
     private boolean drawingRectangle, drawingOval,drawingLine,moving,inside;
 
-    Color color = Color.RED;
     int prevX,prevY,endX,endY,index;
     JPanel blue = new JPanel();
     JPanel red = new JPanel();
@@ -24,17 +27,17 @@ public class Paint extends JFrame implements MouseMotionListener, ActionListener
     JButton moveButton = new JButton(),rectangleButton = new JButton(),ovalButton = new JButton(),lineButton = new JButton();
     private final Model model;
 
-    public Paint() {
-        moveButton.setBounds(0,0,100,50);
+    public PaintBrush() {
+        moveButton.setBounds(140,50,80,40);
         moveButton.setText("Move");
         moveButton.addActionListener(this);
-        rectangleButton.setBounds(0,100,100,50);
+        rectangleButton.setBounds(240,50,80,40);
         rectangleButton.setText("Rect");
         rectangleButton.addActionListener(this);
-        ovalButton.setBounds(0,200,100,50);
+        ovalButton.setBounds(340,50,80,40);
         ovalButton.setText("Oval");
         ovalButton.addActionListener(this);
-        lineButton.setBounds(0,300,100,50);
+        lineButton.setBounds(440,50,80,40);
         lineButton.setText("Line");
         lineButton.addActionListener(this);
         add(moveButton);
@@ -50,7 +53,6 @@ public class Paint extends JFrame implements MouseMotionListener, ActionListener
         createColor(purple, Color.MAGENTA, 200 + 200);
         createColor(black, Color.BLACK, 200 + 240);
 
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         addMouseListener(this);
         addMouseMotionListener(this);
         setLayout(new BorderLayout());
@@ -75,11 +77,11 @@ public class Paint extends JFrame implements MouseMotionListener, ActionListener
 
     @Override
     public void mouseDragged(MouseEvent e) {
-        if (moving && inside) {
+        if (e.getY()<140){
+            return;
+        }
+        if (moving && inside && model.myShapes.get(index).getHeight() + e.getY()>140) {
             model.update(index,e.getX(),e.getY());
-
-            repaint();
-            model.draw(getGraphics());
         }
         else if (drawingRectangle){
             int width = -(prevX - endX);
@@ -87,9 +89,6 @@ public class Paint extends JFrame implements MouseMotionListener, ActionListener
             endX = e.getX();
             endY = e.getY();
             model.updateLast(width,height);
-            repaint();
-            model.draw(getGraphics());
-            return;
         }
         else if (drawingOval){
             int width = -(prevX - endX);
@@ -97,16 +96,13 @@ public class Paint extends JFrame implements MouseMotionListener, ActionListener
             endX = e.getX();
             endY = e.getY();
             model.updateLast(width,height);
-            repaint();
-            model.draw(getGraphics());
-            return;
         }
         else if (drawingLine) {
             model.addLine(new Line(e.getX(),e.getY(),5,5,model.getCurrentColor()));
-            model.draw(getGraphics());
         }
-    }
+        repaint();
 
+    }
     @Override
     public void mouseMoved(MouseEvent e) {
     }
@@ -115,9 +111,11 @@ public class Paint extends JFrame implements MouseMotionListener, ActionListener
     }
     @Override
     public void mousePressed(MouseEvent e) {
+        if (e.getY()<140){
+            return;
+        }
         index = model.insideOfModel(e);
         inside = (index!=-1);
-
         prevX = e.getX();
         prevY = e.getY();
         if (drawingRectangle) {
@@ -131,16 +129,13 @@ public class Paint extends JFrame implements MouseMotionListener, ActionListener
     @Override
     public void mouseReleased(MouseEvent e) {
         inside = false;
-        model.draw(getGraphics());
     }
     @Override
     public void mouseEntered(MouseEvent e) {
-        model.draw(getGraphics());
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-        model.draw(getGraphics());
     }
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -168,5 +163,9 @@ public class Paint extends JFrame implements MouseMotionListener, ActionListener
             moving = false;
             drawingLine = true;
         }
+    }
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        model.draw(g,getSize().width);
     }
 }
