@@ -15,12 +15,12 @@ public static void main(String[] args) {
 		
 		
 		for(int i=0;i<num_enemies;i++)
-			enemies[i] = g.new Enemy();		
+			enemies[i] = g.new Enemy(g);
 		
 		for(int i=0;i<num_friends;i++)
-			friends[i] = g.new Friend();		
+			friends[i] = g.new Friend(g);
 		
-		Game.AirCraft aircraft = g.new AirCraft();
+		Game.AirCraft aircraft = g.new AirCraft(g);
 		
 		aircraft.start();
 		
@@ -30,7 +30,6 @@ public static void main(String[] args) {
 		for(int i=0;i<num_friends;i++)
 			friends[i].start();
 
-		/*
 		try {
 			for(int i=0;i<num_enemies;i++)
 				enemies[i].join();
@@ -41,6 +40,5 @@ public static void main(String[] args) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		*/
 	}
 }
