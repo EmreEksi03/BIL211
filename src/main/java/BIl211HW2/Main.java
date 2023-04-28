@@ -8,7 +8,7 @@ public static void main(String[] args) {
 		
 		int num_enemies = 10;
 		int num_friends = 10;
-		
+
 		Game g = new Game();
 		Game.Enemy[] enemies = new Game.Enemy[num_enemies]; 
 		Game.Friend[] friends = new Game.Friend[num_friends]; 
@@ -19,8 +19,9 @@ public static void main(String[] args) {
 		
 		for(int i=0;i<num_friends;i++)
 			friends[i] = g.new Friend(g);
-		
-		Game.AirCraft aircraft = g.new AirCraft(g);
+
+		Game.AirCraft aircraft = g.new AirCraft();
+		g.setAirCraft(aircraft);
 		
 		aircraft.start();
 		
