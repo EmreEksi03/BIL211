@@ -6,7 +6,7 @@ public class Main {
 public static void main(String[] args) {
 		
 		
-		int num_enemies = 10;
+		int num_enemies = 1;
 
 		int num_friends = 10;
 
@@ -22,7 +22,7 @@ public static void main(String[] args) {
 			friends[i] = g.new Friend();
 
 		Game.AirCraft aircraft = g.new AirCraft();
-		g.setAirCraft(aircraft);
+
 		
 		aircraft.start();
 		

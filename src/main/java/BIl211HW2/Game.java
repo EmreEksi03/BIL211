@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class Game extends JFrame implements KeyListener, MouseListener {
     int numberOfEnemies = 0;
-    Game game = this;
+//    Game game = this;
     ArrayList<Bullet> enemyBullets = new ArrayList<>();
     ArrayList<Bullet> friendlyBullets = new ArrayList<>();
     ArrayList<Bullet> airCraftBullets = new ArrayList<>();
@@ -29,7 +29,7 @@ public class Game extends JFrame implements KeyListener, MouseListener {
         frame.setBounds(100,100,100,100);
         frame.add(label);
         frame.setVisible(true);
-        frame.setDefaultCloseOperation(this.getDefaultCloseOperation());
+        frame.setDefaultCloseOperation(getDefaultCloseOperation());
     }
     public void gameWon(){
         JLabel label = new JLabel();
@@ -39,8 +39,7 @@ public class Game extends JFrame implements KeyListener, MouseListener {
         frame.setBounds(100,100,100,100);
         frame.add(label);
         frame.setVisible(true);
-        frame.setDefaultCloseOperation(this.getDefaultCloseOperation());
-        add(frame);
+        frame.setDefaultCloseOperation(getDefaultCloseOperation());
     }
     public Game() throws HeadlessException {
         super();
@@ -79,7 +78,6 @@ public class Game extends JFrame implements KeyListener, MouseListener {
     public void mouseExited(MouseEvent e) {}
 
     public class Enemy extends Thread {
-        Game g;
         public ArrayList<Bullet> bullets;
         public JPanel getjPanel() {
             return jPanel;
@@ -92,14 +90,13 @@ public class Game extends JFrame implements KeyListener, MouseListener {
         private int y;
         public Enemy() {
             numberOfEnemies++;
-            this.g = game;
-            bullets = g.enemyBullets;
+            bullets = enemyBullets;
             x = (int) (Math.random()*49)*10;
             y = (int) (Math.random()*49)*10;
             jPanel = new JPanel();
             jPanel.setBounds(x,y,10,10);
             jPanel.setBackground(Color.BLACK);
-            g.getContentPane().add(jPanel);
+            Game.this.getContentPane().add(jPanel);
             gameNotFinished = true;
         }
 
@@ -131,9 +128,9 @@ public class Game extends JFrame implements KeyListener, MouseListener {
         }
         public void shoot(){
             Bullet bullet1 = new Bullet(x, y, 1);
-            g.add(bullet1.panel);
+            Game.this.add(bullet1.panel);
             Bullet bullet2 = new Bullet(x, y, 2);
-            g.add(bullet2.panel);
+            Game.this.add(bullet2.panel);
             bullets.add(bullet1);
             bullets.add(bullet2);
         }
@@ -151,10 +148,10 @@ public class Game extends JFrame implements KeyListener, MouseListener {
         }
 
         private void checkIfShot(ArrayList<Bullet> airCraftBullets) {
-            for (int i = 0; i < airCraftBullets.size(); i++) {
-                if (isInsideOf(airCraftBullets.get(i))){
-                    g.remove(this.jPanel);
-                    g.remove(airCraftBullets.get(i).panel);
+            for (Bullet airCraftBullet : airCraftBullets) {
+                if (isInsideOf(airCraftBullet)) {
+                    Game.this.remove(this.jPanel);
+                    Game.this.remove(airCraftBullet.panel);
                     x = 1000;
                     y = 1000;
                     numberOfEnemies--;
@@ -166,7 +163,6 @@ public class Game extends JFrame implements KeyListener, MouseListener {
         @Override
         public void run() {
             while (gameNotFinished){
-                System.out.println(numberOfEnemies);
                 if (times == 9) {
                     move();
                     shoot();
@@ -176,7 +172,7 @@ public class Game extends JFrame implements KeyListener, MouseListener {
                     bullets.get(i).move();
                 }
                 gotShot();
-                g.airCraft.gotShot();
+                airCraft.gotShot();
                 try {
                     Thread.sleep(100);
                 } catch (InterruptedException e) {
@@ -197,15 +193,15 @@ public class Game extends JFrame implements KeyListener, MouseListener {
         public Friend() {
             super();
             getjPanel().setBackground(Color.GREEN);
-            bullets = g.friendlyBullets;
+            bullets = friendlyBullets;
             numberOfEnemies--;
         }
         @Override
         public void gotShot(){
             for (int i = 0; i < enemyBullets.size(); i++) {
                 if (isInsideOf(enemyBullets.get(i))){
-                    g.remove(this.getjPanel());
-                    g.remove(bullets.get(i).panel);
+                    Game.this.remove(this.getjPanel());
+                    Game.this.remove(bullets.get(i).panel);
                 }
             }
         }
@@ -221,7 +217,7 @@ public class Game extends JFrame implements KeyListener, MouseListener {
             jPanel.setBounds(x,y,10,10);
             jPanel.setBackground(Color.RED);
             gameNotFinished = true;
-            airCraft = this;
+            Game.this.setAirCraft(this);
         }
 
         public void moveAircraft(int key){
