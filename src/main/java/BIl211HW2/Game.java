@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 public class Game extends JFrame implements KeyListener, MouseListener {
     int numberOfEnemies = 0;
+    Game game = this;
     ArrayList<Bullet> enemyBullets = new ArrayList<>();
     ArrayList<Bullet> friendlyBullets = new ArrayList<>();
     ArrayList<Bullet> airCraftBullets = new ArrayList<>();
@@ -89,9 +90,9 @@ public class Game extends JFrame implements KeyListener, MouseListener {
         private final JPanel jPanel;
         private int x;
         private int y;
-        public Enemy(Game g) {
+        public Enemy() {
             numberOfEnemies++;
-            this.g = g;
+            this.g = game;
             bullets = g.enemyBullets;
             x = (int) (Math.random()*49)*10;
             y = (int) (Math.random()*49)*10;
@@ -153,7 +154,7 @@ public class Game extends JFrame implements KeyListener, MouseListener {
             for (int i = 0; i < airCraftBullets.size(); i++) {
                 if (isInsideOf(airCraftBullets.get(i))){
                     g.remove(this.jPanel);
-                    g.remove(bullets.get(i).panel);
+                    g.remove(airCraftBullets.get(i).panel);
                     x = 1000;
                     y = 1000;
                     numberOfEnemies--;
@@ -165,13 +166,14 @@ public class Game extends JFrame implements KeyListener, MouseListener {
         @Override
         public void run() {
             while (gameNotFinished){
+                System.out.println(numberOfEnemies);
                 if (times == 9) {
                     move();
                     shoot();
                     times = 0;
                 }
-                for (Bullet bullet : bullets) {
-                    bullet.move();
+                for (int i=0;i<bullets.size();i++) {
+                    bullets.get(i).move();
                 }
                 gotShot();
                 g.airCraft.gotShot();
@@ -192,8 +194,8 @@ public class Game extends JFrame implements KeyListener, MouseListener {
     }
 
     public class Friend extends Enemy {
-        public Friend(Game g) {
-            super(g);
+        public Friend() {
+            super();
             getjPanel().setBackground(Color.GREEN);
             bullets = g.friendlyBullets;
             numberOfEnemies--;
@@ -219,6 +221,7 @@ public class Game extends JFrame implements KeyListener, MouseListener {
             jPanel.setBounds(x,y,10,10);
             jPanel.setBackground(Color.RED);
             gameNotFinished = true;
+            airCraft = this;
         }
 
         public void moveAircraft(int key){

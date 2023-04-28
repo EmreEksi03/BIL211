@@ -16,10 +16,10 @@ public static void main(String[] args) {
 		
 		
 		for(int i=0;i<num_enemies;i++)
-			enemies[i] = g.new Enemy(g);
+			enemies[i] = g.new Enemy();
 		
 		for(int i=0;i<num_friends;i++)
-			friends[i] = g.new Friend(g);
+			friends[i] = g.new Friend();
 
 		Game.AirCraft aircraft = g.new AirCraft();
 		g.setAirCraft(aircraft);
