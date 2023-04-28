@@ -7,6 +7,7 @@ public static void main(String[] args) {
 		
 		
 		int num_enemies = 10;
+
 		int num_friends = 10;
 
 		Game g = new Game();
